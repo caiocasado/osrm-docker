@@ -67,4 +67,4 @@ steps:
 
 timeout: '3600s'
 options:
-  machineType: 'N2_STANDARD_4'
+  machineType: 'N1_STANDARD_2'
