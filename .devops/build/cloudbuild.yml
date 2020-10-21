@@ -67,4 +67,4 @@ steps:
 
 timeout: '3600s'
 options:
-  machineType: n1-highmem-2
+  machineType: 'N1_HIGHMEM_2'
