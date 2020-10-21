@@ -15,7 +15,7 @@ steps:
       - name: 'source-code'
         path: '/build/source-code'
     args: [
-      "--dockerfile=Dockerfile",
+      "--dockerfile=.devops/dockerfiles/Dockerfile",
       "--context=/build/source-code",
       "--build-arg",
       "OSRM_PROFILE=$_VEHICLE",
