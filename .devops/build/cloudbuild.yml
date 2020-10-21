@@ -66,3 +66,5 @@ steps:
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
 
 timeout: '3600s'
+options:
+  machineType: n1-highmem-2
