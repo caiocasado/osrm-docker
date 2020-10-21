@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: deliverycenter-service-osrm
+  name: deliverycenter-service-osrm-service
+  namespace: production
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: deliverycenter-service-osrm
+  type: LoadBalancer
+status:
+  loadBalancer: {}
