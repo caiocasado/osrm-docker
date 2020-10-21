@@ -17,46 +17,12 @@ steps:
     args: [
       "--dockerfile=Dockerfile",
       "--context=/build/source-code",
+      "--build-arg",
+      "OSRM_PROFILE=$_VEHICLE",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:$SHORT_SHA",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:latest",
       "--cache=true",
       "--cache-ttl=72h"]
-
-  - id: app-migrate-job-create
-    name: 'gcr.io/cloud-builders/kubectl'
-    waitFor:
-      - 'docker-image-build'
-    args:
-    - 'apply'
-    - '-f'
-    - '.devops/kubernetes/$_APP_ENV/migration.yaml'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
-
-  - id: app-apply-deployment
-    name: 'gcr.io/cloud-builders/kubectl'
-    waitFor:
-      - 'app-migrate-job-delete'
-    args:
-    - 'apply'
-    - '-f'
-    - '.devops/kubernetes/$_APP_ENV/deployment.yaml'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
-
-  - id: app-apply-service
-    name: 'gcr.io/cloud-builders/kubectl'
-    waitFor:
-      - 'app-apply-deployment'
-    args:
-    - 'apply'
-    - '-f'
-    - '.devops/kubernetes/$_APP_ENV/service.yaml'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
 
   - id: app-set-image
     name: 'gcr.io/cloud-builders/kubectl'

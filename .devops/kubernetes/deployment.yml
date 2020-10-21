@@ -2,8 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: deliverycenter-service-osrm
-  name: deliverycenter-service-osrm
+    app: deliverycenter-service-osrm-car
+  name: deliverycenter-service-osrm-car
   namespace: production
 spec:
   replicas: 2
@@ -15,11 +15,11 @@ spec:
   template:
     metadata:
       labels:
-        app: deliverycenter-service-osrm
+        app: deliverycenter-service-osrm-car
     spec:
       containers:
       - image: gcr.io/deliverycenter-prod/deliverycenter-service-osrm:latest
-        name: deliverycenter-service-osrm
+        name: deliverycenter-service-osrm-car
         ports:
         - containerPort: 80
         readinessProbe:
