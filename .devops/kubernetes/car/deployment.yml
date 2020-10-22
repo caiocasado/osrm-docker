@@ -14,7 +14,7 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: deliverycenter-service-osrm-bicycle
+      app: deliverycenter-service-osrm-car
   template:
     metadata:
       labels:
