@@ -31,7 +31,7 @@ steps:
     args:
     - 'apply'
     - '-f'
-    - '.devops/kubernetes/$_VEHICLE/deployment.yaml'
+    - '.devops/kubernetes/$_VEHICLE/deployment.yml'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
@@ -43,7 +43,7 @@ steps:
     args:
     - 'apply'
     - '-f'
-    - '.devops/kubernetes/$_VEHICLE/service.yaml'
+    - '.devops/kubernetes/$_VEHICLE/service.yml'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
