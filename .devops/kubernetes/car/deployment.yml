@@ -22,6 +22,13 @@ spec:
         name: deliverycenter-service-osrm-car
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            memory: "70Gi"
+            cpu: "6"
+          requests:
+            memory: "64Gi"
+            cpu: "4"
         readinessProbe:
           httpGet:
             path: /nearest/v1/healthz/0,0
