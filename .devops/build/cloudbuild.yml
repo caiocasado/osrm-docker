@@ -65,6 +65,6 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
 
-timeout: '3600s'
+timeout: '10800s'
 options:
   machineType: 'N1_HIGHCPU_32'
