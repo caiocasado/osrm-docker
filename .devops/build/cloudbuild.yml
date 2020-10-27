@@ -26,11 +26,8 @@ steps:
 
   - id: app-apply-deployment
     name: 'gcr.io/cloud-builders/kubectl'
-<<<<<<< HEAD:.devops/build/cloudbuild.yml
     waitFor:
       - 'docker-image-build'
-=======
->>>>>>> fe1a8de5eab084b0ba9cd5f64d2952a27423b63c:kubernetes/build/cloudbuild.yml
     args:
     - 'apply'
     - '-f'
