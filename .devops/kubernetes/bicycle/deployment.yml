@@ -1,9 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: deliverycenter-service-osrm
-  name: deliverycenter-service-osrm
+    app: deliverycenter-service-osrm-bicycle
+  name: deliverycenter-service-osrm-bicycle
   namespace: production
 spec:
   replicas: 2
@@ -12,16 +12,26 @@ spec:
     rollingUpdate:
       maxSurge: 2
       maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: deliverycenter-service-osrm-bicycle
   template:
     metadata:
       labels:
-        app: deliverycenter-service-osrm
+        app: deliverycenter-service-osrm-bicycle
     spec:
       containers:
       - image: gcr.io/deliverycenter-prod/deliverycenter-service-osrm:latest
-        name: deliverycenter-service-osrm
+        name: deliverycenter-service-osrm-bicycle
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            memory: "35Gi"
+            cpu: "3"
+          requests:
+            memory: "32Gi"
+            cpu: "2"
         readinessProbe:
           httpGet:
             path: /nearest/v1/healthz/0,0

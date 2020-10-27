@@ -15,8 +15,10 @@ steps:
       - name: 'source-code'
         path: '/build/source-code'
     args: [
-      "--dockerfile=Dockerfile",
+      "--dockerfile=.devops/dockerfiles/Dockerfile",
       "--context=/build/source-code",
+      "--build-arg",
+      "OSRM_PROFILE=$_VEHICLE",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:$SHORT_SHA",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:latest",
       "--cache=true",
@@ -24,10 +26,12 @@ steps:
 
   - id: app-apply-deployment
     name: 'gcr.io/cloud-builders/kubectl'
+    waitFor:
+      - 'docker-image-build'
     args:
     - 'apply'
     - '-f'
-    - '.devops/kubernetes/$_APP_ENV/deployment.yaml'
+    - '.devops/kubernetes/$_VEHICLE/deployment.yml'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
@@ -39,19 +43,21 @@ steps:
     args:
     - 'apply'
     - '-f'
-    - '.devops/kubernetes/$_APP_ENV/service.yaml'
+    - '.devops/kubernetes/$_VEHICLE/service.yml'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
 
   - id: app-set-image
     name: 'gcr.io/cloud-builders/kubectl'
+    waitFor:
+      - 'app-apply-service'
     args: [
     'set',
     'image',
     'deployment',
-    'deliverycenter-service-osrm',
-    'deliverycenter-service-osrm=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:$SHORT_SHA',
+    'deliverycenter-service-osrm-$_VEHICLE',
+    'deliverycenter-service-osrm-$_VEHICLE=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:$SHORT_SHA',
     '-n',
     '$_APP_NAMESPACE'
     ]
@@ -59,4 +65,6 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=$_APP_REGION'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$_APP_CLUSTER'
 
-timeout: '3600s'
+timeout: '10800s'
+options:
+  machineType: 'N1_HIGHCPU_32'

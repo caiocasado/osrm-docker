@@ -1,7 +1,9 @@
 FROM osrm/osrm-backend:latest
 
-ARG OSRM_PBF_URL="http://download.geofabrik.de/south-america/brazil-latest.osm.pbf"
-ARG OSRM_PROFILE="car"
+ARG OSRM_PBF_URL
+ARG OSRM_PROFILE
+
+ENV OSRM_PBF_URL="http://download.geofabrik.de/south-america/brazil-latest.osm.pbf"
 
 RUN apt-get update \
   && apt-get -y install curl

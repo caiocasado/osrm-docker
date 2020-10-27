@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deliverycenter-service-osrm-car
+  name: deliverycenter-service-osrm-car
+  namespace: production
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: deliverycenter-service-osrm-car
+  template:
+    metadata:
+      labels:
+        app: deliverycenter-service-osrm-car
+    spec:
+      containers:
+      - image: gcr.io/deliverycenter-prod/deliverycenter-service-osrm:latest
+        name: deliverycenter-service-osrm-car
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "70Gi"
+            cpu: "6"
+          requests:
+            memory: "64Gi"
+            cpu: "4"
+        readinessProbe:
+          httpGet:
+            path: /nearest/v1/healthz/0,0
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+        resources: {}
+        stdin: true
+        tty: true
+status: {}
