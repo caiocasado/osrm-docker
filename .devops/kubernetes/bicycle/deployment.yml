@@ -27,10 +27,10 @@ spec:
         - containerPort: 80
         resources:
           limits:
-            memory: "35Gi"
+            memory: "16Gi"
             cpu: "3"
           requests:
-            memory: "32Gi"
+            memory: "14Gi"
             cpu: "2"
         readinessProbe:
           httpGet:
