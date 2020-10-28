@@ -6,7 +6,7 @@ metadata:
   name: deliverycenter-service-osrm-bicycle
   namespace: production
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
