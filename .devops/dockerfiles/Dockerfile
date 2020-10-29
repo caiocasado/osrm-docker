@@ -8,6 +8,8 @@ ENV OSRM_PBF_URL=$OSRM_PBF_URL
 RUN apt-get update && \
     apt-get -y install curl
 
+COPY ./profiles/*.lua /opt/
+
 RUN curl -L $OSRM_PBF_URL --create-dirs -o /data/data.osm.pbf && \
     osrm-extract /data/data.osm.pbf -p /opt/$OSRM_PROFILE.lua && \
     osrm-contract /data/data.osrm

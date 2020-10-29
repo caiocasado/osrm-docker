@@ -18,7 +18,7 @@ steps:
       "--dockerfile=.devops/dockerfiles/Dockerfile",
       "--context=/build/source-code",
       "--build-arg",
-      "OSRM_PROFILE=$_VEHICLE",
+      "OSRM_PROFILE=$_ROUTING_PROFILE",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:$SHORT_SHA",
       "--destination=gcr.io/$PROJECT_ID/deliverycenter-service-osrm:latest",
       "--cache=true",
